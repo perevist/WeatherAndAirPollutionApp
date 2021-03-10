@@ -58,8 +58,16 @@
     <div id="mapid"></div>
 </div>
 
-<script>
-    var mymap = L.map('mapid').setView([51.5, -0.09], 13);
+<script th:inline="javascript">
+    var mymap;
+
+    var cities = [[${cities}]]
+
+    if(cities != null) {
+        mymap = L.map('mapid').setView([cities['0'].lat, cities['0'].lon], 8);
+    } else {
+        mymap = L.map('mapid').setView([52.23, 21.01], 6);
+    }
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
         maxZoom: 18,
@@ -70,7 +78,46 @@
         zoomOffset: -1
     }).addTo(mymap);
 
-    L.marker([51.5, -0.09]).addTo(mymap);
+    function getColor(city) {
+        switch (city.airQuality) {
+            case 1:
+                return '#00cc00';
+            case 2:
+                return '#c4ff4d';
+            case 3:
+                return '#ffff00';
+            case 4:
+                return '#ff5050';
+            case 5:
+                return '#b32d00';
+        }
+    }
+
+    cities.forEach(city => {
+        L.marker([city.lat, city.lon]).addTo(mymap);
+        L.circle([city.lat, city.lon], {
+            color: getColor(city),
+            fillColor: getColor(city),
+            fillOpacity: 0.5,
+            radius: 5000
+        })
+            .addTo(mymap)
+            .bindPopup(
+                `
+                 <h6>${city.name}</h6>
+                 <p>
+                    Temperature: ${city.temperature} &#x2103<br>
+                    Pressure: ${city.pressure} hPa<br>
+                    Humidity: ${city.humidity}%<br>
+                    Wind speed: ${city.windSpeed} m/s<br>
+                    Air pollution: ${city.airQuality}/5
+                 </p>
+                `
+            ).openPopup();
+    })
+
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>

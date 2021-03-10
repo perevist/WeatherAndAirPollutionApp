@@ -3,6 +3,8 @@ package com.patryk.WeatherAndAirPollutionApp;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class SearchRequest {
     private String name;
     private String type;
