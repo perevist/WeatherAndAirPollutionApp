@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #B29792;
+}
+
+#mapid {
+    height: 100%;
+    border: solid #3c2f2f;
+}
+
+.content {
+    padding: 1.5%;
+    flex-grow: 1;
+}
+
+.container-fluid {
+    padding-top: 1%;
+    padding-left: 1.5%;
+}
+
+nav {
+    padding-left: 1.5%;
+}
+
+.form-control {
+    margin-bottom: 7px;
+}
