@@ -1,126 +1,122 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://wwww.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeatherAndAirPollutionApp</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WeatherAndAirPollutionApp</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <!-- Bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <!-- Leaflet -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-            crossorigin=""></script>
+        <!-- Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+              integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+              crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+                integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+                crossorigin=""></script>
 
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/0345047a58.js" crossorigin="anonymous"></script>
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/0345047a58.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/"><i class="fas fa-cloud-sun"></i> WeatherAndAirPollutionApp</a>
-</nav>
+        <!-- Navigation -->
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/"><i class="fas fa-cloud-sun"></i> WeatherAndAirPollutionApp</a>
+        </nav>
 
-<!-- Form -->
-<div class="container-fluid">
-    <div class="row">
-        <form th:object="${searchRequest}" class="col col-lg-5" action="#" th:action="@{/}" method="POST">
-            <div class="form-group row">
-                <label for="name" class="col-sm-1 col-form-label">Name:</label>
-                <div class="col-sm-9">
-                    <input type="text" th:field="*{name}" class="form-control form-control-sm" id="name" placeholder="Name" required>
-                </div>
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                </div>
+        <!-- Form -->
+        <div class="container-fluid">
+            <div class="row">
+                <form th:object="${searchRequest}" class="col col-lg-5" action="#" th:action="@{/}" method="POST">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-1 col-form-label">Name:</label>
+                        <div class="col-sm-9">
+                            <input type="text" th:field="*{name}" class="form-control form-control-sm" id="name" placeholder="Name" required>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                        </div>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="customRadioInline1" th:field="*{type}" name="customRadioInline1" class="custom-control-input" value="country" required>
+                        <label class="custom-control-label" for="customRadioInline1">Country</label>
+                        <input type="radio" id="customRadioInline2" th:field="*{type}" name="customRadioInline1" class="custom-control-input" value="city" required>
+                        <label class="custom-control-label" for="customRadioInline2">City</label>
+                    </div>
+                    <p>If you select country, 10 cities with more than 250 000 inhabitants will be found</p>
+                </form>
             </div>
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadioInline1" th:field="*{type}" name="customRadioInline1" class="custom-control-input" value="country" required>
-                <label class="custom-control-label" for="customRadioInline1">Country</label>
-                <input type="radio" id="customRadioInline2" th:field="*{type}" name="customRadioInline1" class="custom-control-input" value="city" required>
-                <label class="custom-control-label" for="customRadioInline2">City</label>
-            </div>
-            <p>If you select country, 10 cities with more than 250 000 inhabitants will be found</p>
-        </form>
-    </div>
-</div>
+        </div>
 
-<!-- Map -->
-<div class="content">
-    <div id="mapid"></div>
-</div>
+        <!-- Map -->
+        <div class="content">
+            <div id="mapid"></div>
+        </div>
 
-<script th:inline="javascript">
-    var mymap;
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"   integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+        <script th:inline="javascript">
+            var mymap;
 
-    var cities = [[${cities}]]
+            var cities = [[${cities}]]
 
-    if(cities != null) {
-        mymap = L.map('mapid').setView([cities['0'].lat, cities['0'].lon], 8);
-    } else {
-        mymap = L.map('mapid').setView([52.23, 21.01], 6);
-    }
+            if(cities != null) {
+                mymap = L.map('mapid').setView([cities['0'].lat, cities['0'].lon], 8);
+            } else {
+                mymap = L.map('mapid').setView([52.23, 21.01], 6);
+            }
 
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-        maxZoom: 18,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        id: 'mapbox/streets-v11',
-        tileSize: 512,
-        zoomOffset: -1
-    }).addTo(mymap);
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                maxZoom: 18,
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1
+            }).addTo(mymap);
 
-    function getColor(city) {
-        switch (city.airQuality) {
-            case 1:
-                return '#00cc00';
-            case 2:
-                return '#c4ff4d';
-            case 3:
-                return '#ffff00';
-            case 4:
-                return '#ff5050';
-            case 5:
-                return '#b32d00';
-        }
-    }
+            function getColor(city) {
+                switch (city.airQuality) {
+                    case 1:
+                        return '#00cc00';
+                    case 2:
+                        return '#c4ff4d';
+                    case 3:
+                        return '#ffff00';
+                    case 4:
+                        return '#ff5050';
+                    case 5:
+                        return '#b32d00';
+                }
+            }
 
-    cities.forEach(city => {
-        L.marker([city.lat, city.lon]).addTo(mymap);
-        L.circle([city.lat, city.lon], {
-            color: getColor(city),
-            fillColor: getColor(city),
-            fillOpacity: 0.5,
-            radius: 5000
-        })
-            .addTo(mymap)
-            .bindPopup(
-                `
-                 <h6>${city.name}</h6>
-                 <p>
-                    Temperature: ${city.temperature} &#x2103<br>
-                    Pressure: ${city.pressure} hPa<br>
-                    Humidity: ${city.humidity}%<br>
-                    Wind speed: ${city.windSpeed} m/s<br>
-                    Air pollution: ${city.airQuality}/5
-                 </p>
-                `
-            ).openPopup();
-    })
+            cities.forEach(city => {
+                L.marker([city.lat, city.lon]).addTo(mymap)
+                    .bindPopup(
+                        `
+                         <h6>${city.name}</h6>
+                         <p>
+                            Temperature: ${city.temperature} &#x2103<br>
+                            Pressure: ${city.pressure} hPa<br>
+                            Humidity: ${city.humidity}%<br>
+                            Wind speed: ${city.windSpeed} m/s<br>
+                            Air pollution: ${city.airQuality}/5
+                         </p>
+                        `
+                    ).openPopup();
+                L.circle([city.lat, city.lon], {
+                    color: getColor(city),
+                    fillColor: getColor(city),
+                    fillOpacity: 0.5,
+                    radius: 5000
+                }).addTo(mymap);
+            })
 
-
-
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"   integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-</body>
+        </script>
+    </body>
 </html>
