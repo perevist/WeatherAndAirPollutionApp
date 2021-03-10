@@ -1,6 +1,6 @@
 package com.patryk.WeatherAndAirPollutionApp.controller;
 
-import com.patryk.WeatherAndAirPollutionApp.SearchRequest;
+import com.patryk.WeatherAndAirPollutionApp.model.SearchRequest;
 import com.patryk.WeatherAndAirPollutionApp.model.CityDto;
 import com.patryk.WeatherAndAirPollutionApp.service.CityService;
 import lombok.RequiredArgsConstructor;

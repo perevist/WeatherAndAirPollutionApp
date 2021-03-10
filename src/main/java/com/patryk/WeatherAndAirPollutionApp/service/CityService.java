@@ -1,10 +1,10 @@
 package com.patryk.WeatherAndAirPollutionApp.service;
 
 import com.neovisionaries.i18n.CountryCode;
-import com.patryk.WeatherAndAirPollutionApp.SearchRequest;
 import com.patryk.WeatherAndAirPollutionApp.model.CityDto;
+import com.patryk.WeatherAndAirPollutionApp.model.SearchRequest;
 import com.patryk.WeatherAndAirPollutionApp.webclient.geoDb.GeoDbClient;
-import com.patryk.WeatherAndAirPollutionApp.webclient.openweather.dto.OpenWeatherClient;
+import com.patryk.WeatherAndAirPollutionApp.webclient.openweather.OpenWeatherClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
